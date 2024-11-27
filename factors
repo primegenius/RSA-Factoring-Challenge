@@ -1,0 +1,36 @@
+import sys
+import math
+
+def factorize_number(n):
+    """Find two factors of n such that n = p * q."""
+    for p in range(2, int(math.sqrt(n)) + 1):
+        if n % p == 0:
+            q = n // p
+            return p, q
+    return None, None  # Shouldn't reach here if n > 1
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        sys.exit(1)
+    
+    file_name = sys.argv[1]
+    try:
+        with open(file_name, "r") as file:
+            numbers = file.read().splitlines()
+        
+        for number in numbers:
+            n = int(number)
+            p, q = factorize_number(n)
+            if p and q:
+                print(f"{n}={p}*{q}")
+    except FileNotFoundError:
+        print(f"Error: File '{file_name}' not found.")
+        sys.exit(1)
+    except ValueError:
+        print("Error: File contains invalid data.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+
